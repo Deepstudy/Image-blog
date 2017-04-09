@@ -1,0 +1,27 @@
+{{extend 'layout.html'}}
+<a href="http://127.0.0.1:8000/Images/default/index">Home</a>
+<h3>Image: {{=image.title}}</h3>
+<center>
+<img width="400px"
+src="{{=URL('download', args=image.file)}}" />
+</center>
+{{=A('Like', _href=URL("likes",args=image.id))}}<br/>
+Number of likes: {{=numb}}
+{{if len(comments):}}
+<h4>Comments</h4><p>
+{{for comment in comments:}}
+{{=comment.author}} says <i>{{=comment.body}}</i><br/>
+{{pass}}</p>
+{{else:}}
+<h5>No comments posted yet</h5><br/>
+{{pass}}
+<h5>Post a comment</h5>
+{{=form}}
+
+{{ if image.author == auth.user.first_name +" "+auth.user.last_name and auth.has_membership(6, auth.user.id)==False: }}
+{{=A('Delete', _href=URL("delete", args=image.id))}}
+{{pass}}
+{{ if auth.has_membership(6, auth.user.id)==True: }}
+{{=A('Manage', _href=URL("manage"))}}<br/>
+{{=A('Acc_manage', _href=URL("account"))}}
+{{pass}}

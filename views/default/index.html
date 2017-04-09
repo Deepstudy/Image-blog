@@ -1,0 +1,8 @@
+{{extend 'layout.html'}}
+<a href="http://127.0.0.1:8000/Images/default/upload"><h4>Upload new image</h4></a>
+<h3>Current Images</h3>
+<ul>
+{{for image in images:}}
+{{=LI(A(image.title, _href=URL("show", args=image.id)))}}
+{{pass}}
+</ul>

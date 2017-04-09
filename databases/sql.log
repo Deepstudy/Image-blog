@@ -1,0 +1,84 @@
+timestamp: 2012-08-28T18:48:44.705302
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2012-08-28T18:48:44.860838
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2012-08-28T18:48:44.995090
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES auth_group(id) ON DELETE CASCADE
+);
+success!
+timestamp: 2012-08-28T18:48:45.200015
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group(id) ON DELETE CASCADE,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2012-08-28T18:48:45.316891
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2012-08-28T18:48:45.452237
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2012-08-28T18:48:45.569493
+CREATE TABLE image(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title CHAR(512) UNIQUE,
+    file CHAR(512)
+);
+success!
+timestamp: 2012-08-28T18:48:45.712054
+CREATE TABLE comment(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    image_id INTEGER REFERENCES image(id) ON DELETE CASCADE,
+    author CHAR(512),
+    email CHAR(512),
+    body TEXT
+);
+success!
+timestamp: 2012-08-29T23:42:44.494371
+ALTER TABLE image ADD author CHAR(512);
+timestamp: 2012-08-30T11:58:31.748933
+CREATE TABLE like(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    img_id INTEGER REFERENCES image(id) ON DELETE CASCADE,
+    Num_of_likes INTEGER
+);
+success!
+timestamp: 2012-08-30T12:47:03.412700
+ALTER TABLE like ADD counter INTEGER;
+timestamp: 2012-08-31T20:58:14.974873
+ALTER TABLE like ADD usrname CHAR(512);
